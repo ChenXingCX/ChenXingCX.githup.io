@@ -57,6 +57,11 @@
                     },
                     success:function(backData){
                         console.log(backData);
+                        if(backData.code==200){
+                            window.location.href='./index.html'
+                        }else{
+                            alert('请重新输入账号和密码')
+                        }
                         
                     }
                 })
