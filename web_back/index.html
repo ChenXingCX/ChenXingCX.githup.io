@@ -120,6 +120,7 @@
             $.ajax({
                 type:'get',
                 url:'http://localhost:8000/admin/getuser',
+                // url:'https://autumnfish.cn/big/admin/getuser',
                 success:function(backData){
                     console.log(backData);
                     $('.user_info span').html('欢迎&nbsp;&nbsp;'+backData.data.nickname);
