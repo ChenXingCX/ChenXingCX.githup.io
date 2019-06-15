@@ -13,6 +13,15 @@
     <script src="js/jquery-1.12.4.min.js"></script>
 
 </head>
+<style>
+    .col-sm-10 input {
+        opacity: 0
+    }
+
+    .col-sm-10 .button {
+        width: 100px;
+    }
+</style>
 
 <body>
     <div class="container-fluid">
@@ -24,7 +33,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">用户名称：</label>
                     <div class="col-sm-4">
-                        <input type="text"  name="username" class="form-control username" id="inputEmail3" value="李思思">
+                        <input type="text" name="username" class="form-control username" id="inputEmail3" value="李思思">
                     </div>
                 </div>
                 <div class="form-group">
@@ -36,7 +45,8 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
                     <div class="col-sm-4">
-                        <input type="text" name="email" class="form-control email" id="inputEmail3" value="lisisi@126.com">
+                        <input type="text" name="email" class="form-control email" id="inputEmail3"
+                            value="lisisi@126.com">
                     </div>
                 </div>
 
@@ -45,13 +55,15 @@
                     <div class="col-sm-10">
                         <img src="images/2.jpg" alt="" class="user_pic">
                         <input type="file" name="user_pic" id="exampleInputFile">
+                        <label for="exampleInputFile"> <img src="./images/u=3623776615,3866263753&fm=26&gp=0.jpg" class="button" alt=""></label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
                     <div class="col-sm-4">
-                        <input type="password" name="password" class="form-control password" id="inputEmail3" value="12345678">
+                        <input type="password" name="password" class="form-control password" id="inputEmail3"
+                            value="12345678">
                     </div>
                 </div>
 
@@ -81,14 +93,14 @@
                     $('img.user_pic').attr('src', backData.data.user_pic)
                 }
             })
-            
-            $('#exampleInputFile').on('change',function(){
+
+            $('#exampleInputFile').on('change', function () {
                 // 获取选中的图片文件
                 var icon = this.files[0];
                 // 根据这个文件创建一个url
                 var url = URL.createObjectURL(icon)
                 // 把这个url交给预览用的img 
-                $('img.user_pic').attr('src',url)
+                $('img.user_pic').attr('src', url)
             })
 
             $('.btn-success').on('click', function (e) {
@@ -108,7 +120,7 @@
                     }
                 })
             })
-            
+
         })
     </script>
 </body>
