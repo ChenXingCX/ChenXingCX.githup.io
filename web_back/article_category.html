@@ -267,6 +267,7 @@
                 var id = $(this).attr('removeid')
                 console.log(id);
                 // 发送Ajax请求
+                if(confirm('确认删除吗?')){
                 $.ajax({
                     type: 'post',
                     url: 'http://localhost:8000/admin/category_delete',
@@ -275,11 +276,12 @@
                     },
                     success: function (backData) {
                         // confirm 确认框
-                        if (backData.code == 200 && confirm('确认删除此类别?')) {
+                        if (backData.code == 200) {
                             that.parent().parent().remove()
                         }
                     }
                 })
+            }
             })
         })
 
