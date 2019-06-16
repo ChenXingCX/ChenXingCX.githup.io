@@ -30,7 +30,7 @@
                             <option>爱旅行</option>
                         </select>
                         <select id="selStatus" name="" class="form-control input-sm">
-                            <option>所有状态</option>
+                            <option value="">所有状态</option>
                             <option value="drafted">草稿</option>
                             <option value="published">已发布</option>
                         </select>
@@ -220,6 +220,7 @@
                         <td class="text-center">草稿</td>
 
 
+
                         <td class="text-center">
                             <a href="post-edit.html?id=996" class="btn btn-default btn-xs">编辑</a>
                             <a href="javascript:deleteTr( 996 );" class="btn btn-danger btn-xs">删除</a>
@@ -267,11 +268,70 @@
 
         </div>
     </div>
-
+    <script src="./js/template-web.js"></script>
+    <script id="tmp_search" type="text/html">
+    {{each data v}}
+    <tr>
+            <td>{{v.title}}</td>
+            <td>{{v.author}}</td>
+            <td>{{v.type}}</td>
+            <td class="text-center">{{v.data}}</td>
+            <td class="text-center">{{v.state}}</td>
+            <td class="text-center">
+                <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:deleteTr( 1005 );" class="btn btn-danger btn-xs">删除</a>
+            </td>
+        </tr>
+    {{/each}}
+    </script>
+    <script id="tmp_compile" type="text/html">
+        <option value="">所有分类</option>
+        {{each data v}}
+        <option value="{{v.id}}">{{v.name}}</option>
+        {{/each}}
+    </script>
     <script>
         // 设置左侧菜单
         $('#release_btn').click(function(){
             window.parent.setMenu(1,1);
+        })
+
+        // 获取文章分类
+        $(function(){
+            $.ajax({
+                url:'http://localhost:8000/admin/category_search',
+                success:function(backData){
+                    console.log(backData);
+                    if(backData.code==200){
+                        var tmp_compile = template('tmp_compile',backData)
+                        $('#selCategory').html(tmp_compile)
+                    }
+                }
+            })
+
+            // 获取文章列表
+            $('#btnSearch').on('click',function(e){
+                e.preventDefault()
+                var type = $('#selCategory').val()
+                var state = $('#selStatus').val()
+                $.ajax({
+                    url:'http://localhost:8000/admin/search',
+                    data:{
+                        key:'',
+                        type:type,
+                        atate:state,
+                        page:1,
+                        perpage:6,
+                    },
+                    success:function(backData){
+                        console.log(backData);
+                        if(backData.code==200){
+                            var searchHtml = template('tmp_search',backData)
+                            $('tbody').html(searchHtml)
+                        }
+                    }
+                })
+            })
         })
     </script>
 
