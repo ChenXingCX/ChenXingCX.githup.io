@@ -94,11 +94,11 @@
                         <input type="hidden" name="id" id="compileid">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" name="name"  id="recipient-name">
+                            <input type="text" class="form-control" name="name" id="recipient-name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" slug="slug" id="recipient-slug">
+                            <input type="text" class="form-control" name="slug" id="recipient-slug">
                         </div>
                     </form>
                 </div>
@@ -167,33 +167,39 @@
                 // 判断有没有这个类 如果有点击的就是保存
                 // 没有就是新增
                 if ($('#model_add').hasClass('btn-success')) {
+                
                     // 获取用户输入的修改后的文字内容
-                    var name = $('#recipient-name').val()
-                    var slug = $('#recipient-slug').val()
-                    // 获取要编辑的ID
-                    var id = $('#compileid').val()
-                    // 发送数据
+                    // var name = $('#recipient-name').val()
+                    // var slug = $('#recipient-slug').val()
+                    // // 获取要编辑的ID
+                    // var id = $('#compileid').val()
+
+                   
+                    var data = $('form').serialize() // 序列化
+
                     // var formData = new FormData($('form')[0])
-                    // console.log(formData);
-                    
+                    // console.log(formData.get('name'))
+                    // console.log(formData.get('slug'))
+                    // console.log(formData.get('id'))
+
+
                     $.ajax({
                         type: 'post',
                         url: 'http://localhost:8000/admin/category_edit',
-                        data: {
-                            id: id,
-                            name: name,
-                            slug: slug
-                        },
+                        // data: {
+                        //     id: id,
+                        //     name: name,
+                        //     slug: slug
+                        // },
                         // data:formData,
                         // contentType:false,
                         // processData:false,
+                        data: data,
                         success: function (backData) {
-                            // console.log(backData);
-                            
+                            console.log(backData);
                             if (backData.code == 200) {
                                 classes()
                             }
-
                         }
                     })
                 } else {
@@ -255,7 +261,7 @@
             // ------------------------------------------------------------------------------------------------------------------
             // 删除类别
             $('tbody').on('click', 'a.remove', function () {
-                //   保存这个this
+                // 保存这个this
                 var that = $(this)
                 // 获取ID
                 var id = $(this).attr('removeid')
@@ -268,7 +274,8 @@
                         id: id
                     },
                     success: function (backData) {
-                        if (backData.code == 200) {
+                        // confirm 确认框
+                        if (backData.code == 200 && confirm('确认删除此类别?')) {
                             that.parent().parent().remove()
                         }
                     }
