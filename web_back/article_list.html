@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="./js/jquery.twbsPagination.min.js"></script>
 </head>
 
 <body>
@@ -23,7 +24,7 @@
                 <div class="col-xs-6">
                     <form class="form-inline">
                         <select id="selCategory" name="" class="form-control input-sm">
-                            <option>所有分类</option>
+                            <option value="">所有分类</option>
                             <option>未分类</option>
                             <option>奇趣事</option>
                             <option>会生活</option>
@@ -58,7 +59,7 @@
 
 
                     <tr>
-                        
+
                         <td>王积千造统最头</td>
                         <td>杰克</td>
                         <td>奇趣事</td>
@@ -77,7 +78,7 @@
 
 
                     <tr>
-                     
+
                         <td>级电使正回</td>
                         <td>肉丝</td>
                         <td>爱旅行</td>
@@ -96,7 +97,7 @@
 
 
                     <tr>
-                       
+
                         <td>近难领管年算</td>
                         <td>杰克</td>
                         <td>会生活</td>
@@ -115,7 +116,7 @@
 
 
                     <tr>
-                       
+
                         <td>龙大实究</td>
                         <td>杰克</td>
                         <td>未分类</td>
@@ -134,7 +135,7 @@
 
 
                     <tr>
-                      
+
                         <td>算性得走来拉</td>
                         <td>肉丝</td>
                         <td>奇趣事</td>
@@ -153,7 +154,7 @@
 
 
                     <tr>
-                      
+
                         <td>几平会出气</td>
                         <td>管理员</td>
                         <td>奇趣事</td>
@@ -172,7 +173,7 @@
 
 
                     <tr>
-                      
+
                         <td>世团先证型角</td>
                         <td>杰克</td>
                         <td>奇趣事</td>
@@ -191,7 +192,7 @@
 
 
                     <tr>
-                      
+
                         <td>构更反步五</td>
                         <td>肉丝</td>
                         <td>奇趣事</td>
@@ -210,7 +211,7 @@
 
 
                     <tr>
-                       
+
                         <td>组方些</td>
                         <td>肉丝</td>
                         <td>会生活</td>
@@ -230,7 +231,7 @@
 
 
                     <tr>
-                      
+
                         <td>日做发光成</td>
                         <td>管理员</td>
                         <td>爱旅行</td>
@@ -251,20 +252,20 @@
             </table>
 
             <div class="row text-center">
-            <ul class="pagination pagination-sm">
-                <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
-                <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
-                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                <li class="page-item"><a href="#" class="page-link">6</a></li>
-                <li class="page-item"><a href="#" class="page-link">7</a></li>
-                <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
-                <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
-            </ul>
-        </div>
+                <ul class="pagination pagination-sm">
+                    <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
+                    <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">6</a></li>
+                    <li class="page-item"><a href="#" class="page-link">7</a></li>
+                    <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
+                    <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
@@ -279,7 +280,7 @@
             <td class="text-center">{{v.state}}</td>
             <td class="text-center">
                 <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-                <a href="javascript:deleteTr( 1005 );" class="btn btn-danger btn-xs">删除</a>
+                <a href="javascript:void(0)" removeid="{{v.id}}" class="btn btn-danger btn-xs btn_remove">删除</a>
             </td>
         </tr>
     {{/each}}
@@ -291,49 +292,134 @@
         {{/each}}
     </script>
     <script>
+       
         // 设置左侧菜单
-        $('#release_btn').click(function(){
-            window.parent.setMenu(1,1);
+        $('#release_btn').click(function () {
+            window.parent.setMenu(1, 1);
         })
-
-        // 获取文章分类
-        $(function(){
+        // 获取文章分类------------------------------------------------------------------------------
+        $(function () {
             $.ajax({
-                url:'http://localhost:8000/admin/category_search',
-                success:function(backData){
+                url: 'http://localhost:8000/admin/category_search',
+                success: function (backData) {
                     console.log(backData);
-                    if(backData.code==200){
-                        var tmp_compile = template('tmp_compile',backData)
+                    if (backData.code == 200) {
+                        var tmp_compile = template('tmp_compile', backData)
                         $('#selCategory').html(tmp_compile)
                     }
                 }
             })
 
-            // 获取文章列表
-            $('#btnSearch').on('click',function(e){
-                e.preventDefault()
+// ----------------------------------------------------------------------
+            // 声明一个变量来保存这个页码,值任意 因为后面的方法会改变这个值
+            var mytotalPage = 10
+            // 分页插件-------------------------------------------------------------------------------------
+            var $pagination = $('.pagination')
+            var defaultOpts = {
+                totalPages: mytotalPage,
+                visiblePages: 7,
+                first: '首页',
+                last: '尾页',
+                next: '下一页',
+                prev: '上一页',
+                loop:true,
+                onPageClick: function (event, page) {
+                    // $('#page-content').text('Page ' + page);
+                    // event 点击事件
+                    // page 点击的页码
+                    // console.log(page);
+                    getArticle(page)
+                },
+                // success: function (data) {
+                //     vartotalPages = data.newTotalPages;
+                //     varcurrentPage = $pagination.twbsPagination('getCurrentPage');
+                //     $pagination.twbsPagination('destroy');
+                //     $pagination.twbsPagination($.extend({}, defaultOpts, { startPage: currentPage, totalPages: totalPages }));
+                // }
+            }
+            // twbsPagination  分页插件里面的方法 
+            // defaultOpts  一个对象 
+            $pagination.twbsPagination(defaultOpts) // 一进页面就加载一次这个方法
+
+
+            // 获取文章列表-----------------------------------------------------------------------------
+            function getArticle(mypage) {
                 var type = $('#selCategory').val()
                 var state = $('#selStatus').val()
+
                 $.ajax({
-                    url:'http://localhost:8000/admin/search',
-                    data:{
-                        key:'',
-                        type:type,
-                        atate:state,
-                        page:1,
-                        perpage:6,
+                    url: 'http://localhost:8000/admin/search',
+                    data: {
+                        key: '',
+                        type: type,
+                        state: state,
+                        page: mypage,
+                        perpage: 6,
                     },
-                    success:function(backData){
+                    success: function (backData) {
                         console.log(backData);
-                        if(backData.code==200){
-                            var searchHtml = template('tmp_search',backData)
+                        if (backData.code == 200) {
+                            var searchHtml = template('tmp_search', backData)
                             $('tbody').html(searchHtml)
+                            // 把获取到的总页码赋值给声明的那个变量
+                            var totalPages = backData.totalPage
+                            // 判断获取到的总页码和上一次筛选的总页码数相等吗
+                            // 不相等就进入下面的代码 重新获取总页码
+                            // 相等就不进入
+                            if (mytotalPage != totalPages) {
+                                // 把获取的总页码赋值给这个变量 方便下一次和获取到的新页码对比
+                                mytotalPage = totalPages
+                                // 起始页设置为页开始
+                                var currentPage =1;
+                                // 插件方法
+                                $pagination.twbsPagination('destroy');
+                                // 插件方法 重新获取动态
+                                $pagination.twbsPagination($.extend({}, defaultOpts, {
+                                     startPage: currentPage, 
+                                     totalPages: totalPages 
+                                     }));
+                            }
                         }
                     }
                 })
+            }
+
+
+
+            $('#btnSearch').on('click', function (e) {
+                e.preventDefault()
+                // 一进页面就获取文章列表
+                getArticle(1)
+            })
+    
+
+
+
+
+            // 删除文章---------------------------------------------------------------
+            $('tbody').on('click', '.btn_remove', function () {
+                var that = $(this)
+                var removeID = $(this).attr('removeid')
+                console.log(removeID);
+                if (confirm('是否确认删除?')) {
+                    $.ajax({
+                        url: 'http://localhost:8000/admin/article_delete',
+                        data: {
+                            id: removeID
+                        },
+                        success: function (backData) {
+                            console.log(backData);
+                            if (backData.code == 200) {
+                                that.parent().parent().remove()
+                            }
+                        }
+                    })
+                }
             })
         })
-    </script>
+     
+    </script>);
+        
 
 </body>
 
